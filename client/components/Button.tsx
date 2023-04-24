@@ -1,5 +1,4 @@
 import React from "react";
-
 const Button: React.FC<
   { children: React.ReactNode | React.ReactNode[] } & React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -14,6 +13,7 @@ const Button: React.FC<
       }`}
       {...rest}
     >
+      
       {children}
     </button>
   );

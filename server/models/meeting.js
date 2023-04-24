@@ -17,10 +17,14 @@ const meetingSchema = new Schema({
     type: String,
     required: true,
   },
-  dateTime: {
-    type: Date,
+  date: {
+    type: String,
     required: true,
   },
+  time : {
+     type : String,
+     required : true
+  }
 }, { timestamps: true });
 
 const Meeting = mongoose.model('Meeting', meetingSchema);

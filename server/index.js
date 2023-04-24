@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors'
 import educatorRoutes from './routes/educatorRoutes.js'
+import meetingRoutes from './routes/meetingRoutes.js'
 import dotenv from 'dotenv'
 dotenv.config()
 const PORT = 3001;
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
 
 
 app.use("/api/educators", educatorRoutes);
-
+app.use("/api/meetings", meetingRoutes);
 
 app.listen(PORT, () => {
     connect();

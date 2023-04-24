@@ -1,5 +1,6 @@
+import Link from 'next/link'
 import React from "react";
-function ProfilePage({ data }: any) {
+function ProfilePage({ data,meetings }: any) {
   return (
     <div className="mt-12 bg-black flex flex-col justify-center ">
       <div className="max-w-4xl w-full mx-auto flex flex-col ">
@@ -37,7 +38,28 @@ function ProfilePage({ data }: any) {
             </div>
           </div>
         </div>
+        <div className=" overflow-hidden ">
+  {meetings ? meetings.map((meeting: any) => (
+    <div key={meeting.id} className="px-6 py-4 flex mt-10  justify-between rounded-lg bg-gray-800 shadow-lg">
+      <div>
+      <h2 className="text-2xl font-bold text-gray-300 mb-2">{meeting.name}</h2>
+      <p className="text-lg font-medium text-gray-400 mb-1">{meeting.date}</p>
+      <p className="text-lg font-medium text-gray-400">{meeting.time}</p>
       </div>
+      <div>
+      <Link href={`/room/${meeting.meetId}`}>
+      <button className="bg-white  text-gray-900 py-2 px-4 justify-between flex rounded-lg">
+                join meet
+              </button>
+      </Link>
+      </div>
+      
+    </div>
+  )): (<p className="text-gray-600">No meetings scheduled.</p>) }
+</div>
+      </div>
+     
+
     </div>
   );
 }
