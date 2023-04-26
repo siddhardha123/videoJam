@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image';
 import React from "react";
 function ProfilePage({ data,meetings }: any) {
   return (
@@ -6,7 +7,7 @@ function ProfilePage({ data,meetings }: any) {
       <div className="max-w-4xl w-full mx-auto flex flex-col ">
         {/* Profile Picture */}
         <div className="md:flex text-center justify-around items-center ">
-          <img
+          <Image
             src={data.photo}
             alt="Profile"
             className="rounded-full ml-24 md:ml-0 w-48 h-48 border-4 border-white mb-8"

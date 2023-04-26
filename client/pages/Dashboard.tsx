@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
-
+import { useAccount } from 'wagmi';
 function Dashboard() {
  
 const [meetNamePopup, setMeetNamePopup] = useState('');
 const [meetTimePopup, setMeetTimePopup] = useState('');
 const [meetDatePopup, setMeetDatePopup] = useState('');
+const {address} = useAccount()
 
   const [scheduledMeetings, setScheduledMeetings] = useState<any>([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -18,10 +19,11 @@ const [meetDatePopup, setMeetDatePopup] = useState('');
   }
   const handleAddMeet = async ({ name, time, date } : any) => {
     try {
-      const response = await axios.post('', {
+      const response = await axios.post('http://localhost:3001/api/meetings/addMeeting', {
         name: name,
         time: time,
         date: date,
+        wallet : address,
       });
       setScheduledMeetings([...scheduledMeetings, response.data]);
     } catch (error) {
@@ -90,8 +92,8 @@ const [meetDatePopup, setMeetDatePopup] = useState('');
              onClick={() => {
                handleAddMeet({
                  name: meetNamePopup,
-                 time: meetTimePopup,
-                 date: meetDatePopup,
+                 time: meetTimePopup.toString(),
+                 date: meetDatePopup.toString(),
                });
                setMeetNamePopup('');
                setMeetTimePopup('');

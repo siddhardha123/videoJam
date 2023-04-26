@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Link from 'next/link'
 const Landing = () => {
   return (
             <section>
@@ -15,12 +15,12 @@ const Landing = () => {
                         Access expert-led meetings and recordings that are only available to those with the appropriate tokens.
                         </p>
                         <div className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
-                            <a href="/AddEducator" className="block py-2 px-4 text-white font-medium bg-indigo-600 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
+                            <Link href="/AddEducator" className="block py-2 px-4 text-white font-medium bg-indigo-600 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
                                 Join as Educator
-                            </a>
-                            <a href="/Educators" className="block py-2 px-4 text-white hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg">
+                            </Link>
+                            <Link href="/Educators" className="block py-2 px-4 text-white hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg">
                                 Get access
-                            </a>
+                            </Link>
                         </div>
                     </div>
                    

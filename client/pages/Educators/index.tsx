@@ -22,15 +22,15 @@ const educators = ({ data } : any) => {
                         Meet our team
                     </h3>
                     <p className=" mt-3">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy.
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industrys standard dummy.
                     </p> 
                 </div>
                 <div className="mt-12">
                     <ul className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
                         {
                             data.map((item : any) => (
-                                <Link href={`/Educators/${item._id ? item._id.toString() : ''}`}>
-                                <EducatorCard props={item} />
+                                <Link key={item._id} href={`/Educators/${item._id ? item._id.toString() : ''}`}>
+                                 <EducatorCard props={item} />
                               </Link>
                             ))
                         }
