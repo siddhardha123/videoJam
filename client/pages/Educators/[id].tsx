@@ -21,8 +21,8 @@ export const getStaticPaths = async () => {
   export const getStaticProps = async (context  : any) => {
     const id = context.params.id;
     const educatorId = context.params.id;
-    const res1 = await fetch(`http://localhost:3001/api/educators/getEducators/${id}`);
-    const res2 = await fetch(`http://localhost:3001/api/meetings/getMeetings/${educatorId}`);
+    const res1 = await fetch(`https://videojambackend.vercel.app/api/educators/getEducators/${id}`);
+    const res2 = await fetch(`https://videojambackend.vercel.app/api/meetings/getMeetings/${educatorId}`);
     const educators = await res1.json();
     const meetings = await res2.json();
     return {

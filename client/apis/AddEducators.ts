@@ -8,7 +8,7 @@ type educator = {
 }
 const addEducators = async (form : educator) => {
      
-    const response = await axios.post("http://localhost:3001/api/educators/addEducators",{
+    const response = await axios.post("https://videojambackend.vercel.app/api/educators/addEducators",{
         ...form
     })
     return response.data
