@@ -5,7 +5,7 @@ const EducatorCard = ({props} : any) => {
   return (
    
     <div key={props.id} className="card rounded-lg bg-gray-500 text-white p-8">
-      <Image
+      <img
         src={props.photo}
         alt="Profile picture"
         className="w-24 h-24 rounded-full mx-auto mb-4"

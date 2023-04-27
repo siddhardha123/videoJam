@@ -1,11 +1,60 @@
 import { useState } from 'react';
-import axios from 'axios';
+import lighthouse from '@lighthouse-web3/sdk';
+import AddUploadRec from '@/components/AddUploadRec';
+import AddUploadMeet from '@/components/AddUploadMeet';
+import {ethers} from 'ethers'
+import addMeet from '../apis/AddMeet'
 import { useAccount } from 'wagmi';
+import uploadEncrypted from '../apis/upload.js'
+
+
+
+
+
 function Dashboard() {
- 
+  const [cid, setCid] = useState(null)
+  const [status, setStatus] = useState(null)
+  const encryptionSignature = async() =>{
+    const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    const messageRequested = (await lighthouse.getAuthMessage(address)).data.message;
+    const signedMessage = await signer.signMessage(messageRequested);
+    return({
+      signedMessage: signedMessage,
+      publicKey: address
+    });
+  }
+  const uploadFileEncrypted = async(e : any) =>{
+    // const sig = await encryptionSignature();
+    // const response = await upload(
+    //   e,
+    //   "1d9f6c73.e3be180754104302a90ab64713dae2ef", // add api key here
+    // );
+    // console.log(response);
+    // setCid(response.data.Hash);
+    uploadEncrypted(e,encryptionSignature).then((data)=>{
+        setCid(data)
+    })
+  }
+
+  
+  
 const [meetNamePopup, setMeetNamePopup] = useState('');
 const [meetTimePopup, setMeetTimePopup] = useState('');
 const [meetDatePopup, setMeetDatePopup] = useState('');
+//recording logic
+const [showUploadRecPopup, setShowUploadRecPopup] = useState(false);
+
+function handleUploadRecClick() {
+  setShowUploadRecPopup(true);
+}
+function handleUploadRecCancelClick() {
+  setShowUploadRecPopup(false);
+}
+async function handleUploadRecConfirmClick() {
+  setShowUploadRecPopup(false);
+}
 const {address} = useAccount()
 
   const [scheduledMeetings, setScheduledMeetings] = useState<any>([]);
@@ -18,17 +67,15 @@ const {address} = useAccount()
     setShowPopup(false);
   }
   const handleAddMeet = async ({ name, time, date } : any) => {
-    try {
-      const response = await axios.post('http://localhost:3001/api/meetings/addMeeting', {
-        name: name,
-        time: time,
-        date: date,
-        wallet : address,
-      });
-      setScheduledMeetings([...scheduledMeetings, response.data]);
-    } catch (error) {
-      console.error(error);
-    }
+     const form = {
+         name : name,
+         time : time,
+         date : date,
+         wallet : address
+     }
+      addMeet(form).then((data)=>{
+        setScheduledMeetings([...scheduledMeetings, data]);
+      })
   };
 
   return (
@@ -40,6 +87,13 @@ const {address} = useAccount()
       >
         Add Meet
       </button>
+      <button
+        className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 ml-2"
+        onClick={handleUploadRecClick}
+      >
+        Upload Recording
+      </button>
+
       <div className="mt-8">
         <h3 className="text-lg font-semibold mb-2">Scheduled Meetings:</h3>
         {scheduledMeetings.length > 0 ? (
@@ -55,59 +109,30 @@ const {address} = useAccount()
         )}
       </div>
       {showPopup && (
-         <div className="bg-white text-black rounded-lg p-5 ">
-         <div className="mb-5">
-           <h2 className="text-lg font-semibold">Add Meeting</h2>
-           <input
-             type="text"
-             placeholder="Meeting Name"
-             value={meetNamePopup}
-             onChange={(e) => setMeetNamePopup(e.target.value)}
-             className="border rounded-lg px-3 py-2 mt-2"
-           />
-           <input
-             type="time"
-             placeholder="Meeting Time"
-             value={meetTimePopup}
-             onChange={(e) => setMeetTimePopup(e.target.value)}
-             className="border rounded-lg px-3 py-2 mt-2 ml-2"
-           />
-           <input
-             type="date"
-             placeholder="Meeting Date"
-             value={meetDatePopup}
-             onChange={(e) => setMeetDatePopup(e.target.value)}
-             className="border rounded-lg px-3 py-2 mt-2 ml-2"
-           />
-         </div>
-         <div className="flex justify-end">
-           <button
-             className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-2"
-             onClick={handleCancelClick}
-           >
-             Cancel
-           </button>
-           <button
-             className="bg-[#CB1C8D] hover:bg-[#6f104e] text-white font-bold py-2 px-4 rounded"
-             onClick={() => {
-               handleAddMeet({
-                 name: meetNamePopup,
-                 time: meetTimePopup.toString(),
-                 date: meetDatePopup.toString(),
-               });
-               setMeetNamePopup('');
-               setMeetTimePopup('');
-               setMeetDatePopup('');
-             }}
-           >
-             Add
-           </button>
-         </div>
-       </div>
-       
+         
+         <AddUploadMeet
+         meetNamePopup={meetNamePopup} 
+         setMeetNamePopup={setMeetNamePopup} 
+         meetTimePopup={meetTimePopup} 
+         setMeetTimePopup={setMeetTimePopup} 
+         meetDatePopup={meetDatePopup} 
+         setMeetDatePopup={setMeetDatePopup} 
+         handleCancelClick={handleCancelClick} 
+         handleAddMeet={handleAddMeet} 
+         />
       )}
-</div>
-  )
-        }
+     {showUploadRecPopup &&  (
+        <AddUploadRec 
+        setNewRecFile
+        uploadFileEncrypted={uploadFileEncrypted}
+        setNewRecName
+        handleUploadRecConfirmClick
+        handleUploadRecCancelClick
+        /> 
+        
+     )}
+
+     </div>)
+}
 export default Dashboard;
            

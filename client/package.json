@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@huddle01/react": "^0.0.7",
+    "@lighthouse-web3/sdk": "^0.2.1",
     "@rainbow-me/rainbowkit": "^0.12.9",
     "@types/node": "18.15.13",
     "@types/react": "18.0.38",
