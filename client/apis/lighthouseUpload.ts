@@ -3,7 +3,6 @@ import axios from 'axios'
 const LighthouseUpload = async (
   e: any,
   accessToken: string,
-  uploadProgressCallback = (data: any) => {}
 ) => {
   try {
     const endpoint = 'https://node.lighthouse.storage/api/v0/add'
@@ -29,14 +28,6 @@ const LighthouseUpload = async (
         Encryption: `${false}`,
         'Mime-Type': mimeType,
         Authorization: token,
-      },
-      onUploadProgress: function (progressEvent : any) {
-        const _progress = Math.round(progressEvent.loaded / progressEvent.total)
-        uploadProgressCallback({
-          progress: _progress,
-          total: progressEvent.total,
-          uploaded: progressEvent.loaded,
-        })
       },
     })
 
