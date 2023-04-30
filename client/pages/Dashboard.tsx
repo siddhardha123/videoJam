@@ -78,7 +78,7 @@ async function handleUploadRecConfirmClick() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Welcome back, sid!</h2>
+      <h2 className="text-2xl font-bold mb-4">Welcome back, {address ? address : "0xConnect wallet"}</h2>
       <button
         className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
         onClick={() => setShowPopup(true)}
