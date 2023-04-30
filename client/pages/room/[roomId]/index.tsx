@@ -193,6 +193,7 @@ const Room = () => {
         
 
           {isRoomJoined && (
+            <>
             <ControlBar
               produceVideo={produceVideo}
               produceAudio={produceAudio}
@@ -204,19 +205,12 @@ const Room = () => {
               stopRecording={stopRecording}
               roomId={roomId}
             />
+            </>
           )}
 
           {/* peers */}
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-          <div className="h-80 aspect-video  bg-zinc-800/50 rounded-2xl relative overflow-hidden">
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  muted
-                  className="object-contain absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                />
-          
-             </div>
+       
             {Object.values(peers)
               .filter((peer) => peer.cam)
               .map((peer) => (

@@ -33,7 +33,10 @@ const  ProfilePage = ({ data,meetings,materials }: any)=> {
  
 
  useEffect(()=>{
-     Verify(address).then((data)=>{
+
+   if(address){
+    console.log(address)
+    Verify(address).then((data)=>{
       console.log(data);
       if (data.totalCount >= 1) {
         setDisable(true);
@@ -41,6 +44,7 @@ const  ProfilePage = ({ data,meetings,materials }: any)=> {
         setDisable(false)
       }
      })
+   }
  },[address])
 
   return (

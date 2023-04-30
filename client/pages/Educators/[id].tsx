@@ -1,25 +1,25 @@
 import React from 'react'
 import ProfilePage from '@/components/ProfilePage';
 import baseUrl from '../../baseUrl.json'
-export const getStaticPaths = async () => {
-    const res = await fetch(`${baseUrl.url}/api/educators/getEducators`);
-    const data = await res.json();
+// export const getStaticPaths = async () => {
+//     const res = await fetch(`${baseUrl.url}/api/educators/getEducators`);
+//     const data = await res.json();
   
-    const paths = data.map((item : any) => {
-      return {
-        params: {
-          id : item._id.toString(),
-        },
-      };
-    });
+//     const paths = data.map((item : any) => {
+//       return {
+//         params: {
+//           id : item._id.toString(),
+//         },
+//       };
+//     });
   
-    return {
-      paths,
-      fallback: false,
-    };
-  };
+//     return {
+//       paths,
+//       fallback: true,
+//     };
+//   };
   
-  export const getStaticProps = async (context  : any) => {
+  export const getServerSideProps = async (context : any) => {
     const id = context.params.id;
     const educatorId = context.params.id;
     const res1 = await fetch(`${baseUrl.url}/api/educators/getEducators/${id}`);

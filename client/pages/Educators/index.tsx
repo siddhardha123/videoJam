@@ -1,7 +1,7 @@
 import Link from "next/link";
 import baseUrl from '../../baseUrl.json'
 import EducatorCard from "@/components/EducatorCard";
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const res = await fetch(`${baseUrl.url}/api/educators/getEducators`);
   const data = await res.json();
 

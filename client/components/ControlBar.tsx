@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useRef, useEffect } from "react";
 import videoLogo from '@/assets/video-camera.png'
 function ControlBar({produceVideo,produceAudio,stopProducingVideo,stopProducingAudio,micStream,camStream,startRecording,stopRecording,roomId} : any) {
   const [isVideoOn, setIsVideoOn] = useState(false);
@@ -34,10 +34,11 @@ function ControlBar({produceVideo,produceAudio,stopProducingVideo,stopProducingA
   }
  
 
- 
-
   return (
+      <>
     <div className="fixed bottom-0 w-96 rounded-xl left-96 bg-gray-800 p-4 flex justify-center items-center space-x-5">
+
+
     <button
       className={`mr-4 ${
         isVideoOn ? "bg-green-500" : "bg-red-500"
@@ -66,6 +67,7 @@ function ControlBar({produceVideo,produceAudio,stopProducingVideo,stopProducingA
       {isRecordingOn ? 'recording on' : 'recording off'}
     </button>
   </div>
+  </>
   );
 }
 
