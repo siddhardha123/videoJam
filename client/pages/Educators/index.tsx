@@ -1,7 +1,7 @@
 import Link from "next/link";
 import EducatorCard from "@/components/EducatorCard";
 export const getStaticProps = async () => {
-  const res = await fetch("https://videojambackend.vercel.app/api/educators/getEducators");
+  const res = await fetch("http://localhost:3001/api/educators/getEducators");
   const data = await res.json();
 
   return {

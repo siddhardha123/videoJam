@@ -1,7 +1,7 @@
 
 // File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.0/contracts/utils/Strings.sol
 
-// SPDX-License-Identifier: GPL-3.0
+
 
 pragma solidity ^0.8.0;
 
@@ -939,13 +939,13 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal virtual { }
 }
 
-// File: contracts/gatedTeacher.sol
+// File: contracts/newFlat.sol
 
 
 pragma solidity ^0.8.0;
 
 
-contract TeacherNFT is ERC721 {
+contract gatedNFT is ERC721 {
     struct Teacher {
         string name;
         uint256 price;
@@ -965,7 +965,6 @@ contract TeacherNFT is ERC721 {
     }
     
    function buyNFT(address teacherAddress) public payable {
-    require(teachers[teacherAddress].price == msg.value, "Incorrect payment amount");
     uint256 tokenId = totalTokens + 1;
     _safeMint(msg.sender, tokenId);
     tokenIdToTeacher[tokenId] = teachers[teacherAddress];

@@ -2,14 +2,14 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const meetingSchema = new Schema({
+const materialSchema = new Schema({
   
   educatorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Educator',
     required: true,
   },
-  meetId: {
+  link : {
     type: String,
     required: true,
     unique: true,
@@ -18,16 +18,9 @@ const meetingSchema = new Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: String,
-    required: true,
-  },
-  time : {
-     type : String,
-     required : true
-  }
+ 
 }, { timestamps: true });
 
-const Meeting = mongoose.model('Meeting', meetingSchema);
+const Material = mongoose.model('Material', materialSchema);
 
-export default Meeting;
+export default Material;

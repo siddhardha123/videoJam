@@ -1,7 +1,48 @@
 import Link from 'next/link'
 import Image from 'next/image';
-import React from "react";
-function ProfilePage({ data,meetings }: any) {
+import React,{useEffect, useState} from "react";
+import { ethers } from 'ethers';
+import { useAccount } from 'wagmi';
+import contractConfig from "../contractConfig.json";
+import Verify from '@/apis/Verify';
+import {
+  UseContractConfig,
+  useContractRead,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+  useContractWrite,
+} from "wagmi";
+const  ProfilePage = ({ data,meetings,materials }: any)=> {
+
+
+  const [disable,setDisable] = useState(false)
+  const {address} = useAccount()
+  const {  data: writeData, write } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: `0x${contractConfig.address}`,
+    abi: contractConfig.abi,
+    functionName: "buyNFT",
+    args: [data.wallet],
+    overrides : {
+        value : ethers.utils.parseEther(data.price)
+    }
+  });
+  const { data: waitForTransactionData ,isSuccess} = useWaitForTransaction({
+    hash: writeData?.hash,
+  });
+ 
+
+ useEffect(()=>{
+     Verify(address).then((data)=>{
+      console.log(data);
+      if (data.totalCount >= 1) {
+        setDisable(true);
+      } else {
+        setDisable(false)
+      }
+     })
+ },[])
+
   return (
     <div className="mt-12 bg-black flex flex-col justify-center ">
       <div className="max-w-4xl w-full mx-auto flex flex-col ">
@@ -32,7 +73,9 @@ function ProfilePage({ data,meetings }: any) {
               <p>* Access to all recorded classes</p>
             </div>
             <div className="ml-">
-              <button className="bg-white  text-gray-900 py-2 px-4 justify-between flex rounded-lg">
+              <button className="bg-white  text-gray-900 py-2 px-4 justify-between flex rounded-lg"
+               disabled={!write} onClick={() => write?.()}
+               >
                 Buy Membership
               </button>
               <p className="mt-5">an NFT will be minted to your wallet address which will act as a pass to all the activities</p>
@@ -57,6 +100,23 @@ function ProfilePage({ data,meetings }: any) {
       
     </div>
   )): (<p className="text-gray-600">No meetings scheduled.</p>) }
+  {materials ? materials.map((material: any) => (
+    <div key={material.id} className="px-6 py-4 flex mt-10  justify-between rounded-lg bg-gray-800 shadow-lg">
+      <div>
+      <h2 className="text-2xl font-bold text-gray-300 mb-2">{material.name}</h2>
+      </div>
+      <div>
+      <Link href={`${material.link}`}>
+      <button className="bg-white  text-gray-900 py-2 px-4 justify-between flex rounded-lg"
+        disabled={!disable}
+       >
+                open 
+              </button>
+      </Link>
+      </div>
+      
+    </div>
+  )): (<p className="text-gray-600">No materials found.</p>) }
 </div>
       </div>
      

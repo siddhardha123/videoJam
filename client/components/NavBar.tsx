@@ -18,7 +18,8 @@ const NavBar:NextComponentType = () => {
           <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
               <div className="flex items-center justify-between py-3 md:py-5 md:block">
                     <Link href="/">
-                        Video JAM
+                        <p className='text-2xl'>EduGate</p>
+                        
                     </Link>
                   <div className="md:hidden">
                       <button className="text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border"

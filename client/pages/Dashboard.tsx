@@ -1,44 +1,40 @@
 import { useState } from 'react';
-import lighthouse from '@lighthouse-web3/sdk';
 import AddUploadRec from '@/components/AddUploadRec';
 import AddUploadMeet from '@/components/AddUploadMeet';
-import {ethers} from 'ethers'
 import addMeet from '../apis/AddMeet'
 import { useAccount } from 'wagmi';
-import uploadEncrypted from '../apis/upload.js'
-
-
+import lighthouseUpload from '@/apis/LighthouseUpload';
+import addMaterials from '@/apis/AddMaterial';
 
 
 
 function Dashboard() {
+  const [showPopup, setShowPopup] = useState(false);
   const [cid, setCid] = useState(null)
-  const [status, setStatus] = useState(null)
-  const encryptionSignature = async() =>{
-    const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    const messageRequested = (await lighthouse.getAuthMessage(address)).data.message;
-    const signedMessage = await signer.signMessage(messageRequested);
-    return({
-      signedMessage: signedMessage,
-      publicKey: address
-    });
-  }
-  const uploadFileEncrypted = async(e : any) =>{
-    // const sig = await encryptionSignature();
-    // const response = await upload(
-    //   e,
-    //   "1d9f6c73.e3be180754104302a90ab64713dae2ef", // add api key here
-    // );
-    // console.log(response);
-    // setCid(response.data.Hash);
-    uploadEncrypted(e,encryptionSignature).then((data)=>{
-        setCid(data)
+  const {address} = useAccount()
+  const [materialName,setMaterialName] = useState("")
+  const uploadFile = async(e: any) =>{
+    e.persist()
+    const output = await lighthouseUpload(e, "a1e77544.b0f00ad1620a4877925859ef9856ee21");
+    setShowPopup(false);
+    console.log('File Status:', output);
+    setMaterialName(output.data.Name)
+    setCid(output.data.Hash)
+   
+    const form = {
+         "link" : `https://gateway.lighthouse.storage/ipfs/${cid}`,
+         "name" :  materialName,
+         "wallet" : address
+    }
+    console.log(form)
+    addMaterials(form).then((data) => {
+          console.log(data)
     })
-  }
 
+    
+  }
   
+
   
 const [meetNamePopup, setMeetNamePopup] = useState('');
 const [meetTimePopup, setMeetTimePopup] = useState('');
@@ -55,10 +51,10 @@ function handleUploadRecCancelClick() {
 async function handleUploadRecConfirmClick() {
   setShowUploadRecPopup(false);
 }
-const {address} = useAccount()
+
 
   const [scheduledMeetings, setScheduledMeetings] = useState<any>([]);
-  const [showPopup, setShowPopup] = useState(false);
+  
   function handleCancelClick() {
     setShowPopup(false);
   }
@@ -74,7 +70,7 @@ const {address} = useAccount()
          wallet : address
      }
       addMeet(form).then((data)=>{
-        setScheduledMeetings([...scheduledMeetings, data]);
+         console.log(data)
       })
   };
 
@@ -123,11 +119,11 @@ const {address} = useAccount()
       )}
      {showUploadRecPopup &&  (
         <AddUploadRec 
+        uploadFile={uploadFile}
         setNewRecFile
-        uploadFileEncrypted={uploadFileEncrypted}
         setNewRecName
         handleUploadRecConfirmClick
-        handleUploadRecCancelClick
+        handleUploadRecCancelClick={handleUploadRecCancelClick}
         /> 
         
      )}

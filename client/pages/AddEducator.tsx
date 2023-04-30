@@ -2,17 +2,25 @@ import React from 'react'
 import {useState,useEffect} from 'react';
 import dynamic from "next/dynamic";
 import { useAccount } from 'wagmi';
-import { BigNumber } from 'ethers';
 import { ethers } from 'ethers';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
 import addEducators from '@/apis/AddEducators';
-
+import contractConfig from "../contractConfig.json";
+import { BigNumber } from 'ethers';
+import {
+    UseContractConfig,
+    useContractRead,
+    usePrepareContractWrite,
+    useWaitForTransaction,
+    useContractWrite,
+  } from "wagmi";
 const AddEducator = () => {
     const {address,isConnected } = useAccount()
     const [success,setSuccess] = useState(false)
     const [error,setError]  = useState(false)
     const [message,setMessage] = useState("")
+    const [wei,setWei] = useState(BigNumber.from(0))
     const [form,setForm] = useState({
         name : "",
         photo: "",
@@ -21,9 +29,21 @@ const AddEducator = () => {
         price : ""
     })
 
+    const { config } = usePrepareContractWrite({
+        address: `0x${contractConfig.address}`,
+        abi: contractConfig.abi,
+        functionName: "addTeacher",
+        args: [form.wallet,form.name,wei,form.photo],
+      });
+      const { data: writeData, write } = useContractWrite(config);
+      const { data: waitForTransactionData ,isSuccess} = useWaitForTransaction({
+        hash: writeData?.hash,
+      });
+       
      useEffect(()=>{
-         
-     },[isConnected,address])
+         console.log(waitForTransactionData)
+         console.log(writeData)
+     },[isConnected,address,writeData,waitForTransactionData])
 
     const handleChange = (event : any) => {
         const { name, value } = event.target;
@@ -36,6 +56,8 @@ const AddEducator = () => {
     const handleSubmit = (event : any) => {
         event.preventDefault();
         // Add your logic to submit the form data here
+        setWei(ethers.utils.parseEther(form.price))
+        write?.()
         addEducators(form).then((data)=>{
             console.log(data)
             if(data){
