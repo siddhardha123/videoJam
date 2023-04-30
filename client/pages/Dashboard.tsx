@@ -3,7 +3,7 @@ import AddUploadRec from '@/components/AddUploadRec';
 import AddUploadMeet from '@/components/AddUploadMeet';
 import addMeet from '../apis/AddMeet'
 import { useAccount } from 'wagmi';
-import lighthouseUpload from '../apis/LighthouseUpload';
+import LighthouseUpload from '@/apis/LighthouseUpload';
 import addMaterials from '@/apis/AddMaterial';
 
 function Dashboard() {
@@ -13,7 +13,7 @@ function Dashboard() {
   const [materialName,setMaterialName] = useState("")
   const uploadFile = async(e: any) =>{
     e.persist()
-    const output = await lighthouseUpload(e, "a1e77544.b0f00ad1620a4877925859ef9856ee21");
+    const output = await LighthouseUpload(e, "a1e77544.b0f00ad1620a4877925859ef9856ee21");
     setShowPopup(false);
     console.log('File Status:', output);
     setMaterialName(output.data.Name)

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const lighthouseUpload = async (
+const LighthouseUpload = async (
   e: any,
   accessToken: string,
   uploadProgressCallback = (data: any) => {}
@@ -61,4 +61,4 @@ const lighthouseUpload = async (
 }
 
 
-export default lighthouseUpload;
+export default LighthouseUpload;
