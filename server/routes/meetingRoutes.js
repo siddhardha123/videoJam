@@ -9,4 +9,4 @@ router.post("/addMeeting",addMeeting);
 router.post("/addMaterial",addMaterial);
 router.get("/getMeetings/:educatorId",getMeetingsById);
 router.get("/getMaterials/:educatorId",getMaterialsById);
-export default router;
+export default router ;
