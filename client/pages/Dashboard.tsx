@@ -13,21 +13,25 @@ function Dashboard() {
   const [materialName,setMaterialName] = useState("")
   const uploadFile = async(e: any) =>{
     e.persist()
-    const output = await LighthouseUpload(e, "a1e77544.b0f00ad1620a4877925859ef9856ee21");
-    setShowPopup(false);
-    console.log('File Status:', output);
-    setMaterialName(output.data.Name)
-    setCid(output.data.Hash)
-   
-    const form = {
-         "link" : `https://gateway.lighthouse.storage/ipfs/${cid}`,
-         "name" :  materialName,
-         "wallet" : address
-    }
-    console.log(form)
-    addMaterials(form).then((data) => {
-          console.log(data)
+    LighthouseUpload(e, "a1e77544.b0f00ad1620a4877925859ef9856ee21").then((data)=>{
+      setShowPopup(false);
+      console.log('File Status:', data);
+      setMaterialName(data.data.Name)
+      setCid(data.data.Hash)
+
+      const form = {
+        "link" : `https://gateway.lighthouse.storage/ipfs/${cid}`,
+        "name" :  materialName,
+        "wallet" : address
+      }
+   console.log(form)
+   addMaterials(form).then((data) => {
+         console.log(data)
+   })
     })
+    
+   
+    
 
     
   }
