@@ -3,10 +3,8 @@ import AddUploadRec from '@/components/AddUploadRec';
 import AddUploadMeet from '@/components/AddUploadMeet';
 import addMeet from '../apis/AddMeet'
 import { useAccount } from 'wagmi';
-import lighthouseUpload from '@/apis/LighthouseUpload';
+import lighthouseUpload from '../apis/LighthouseUpload';
 import addMaterials from '@/apis/AddMaterial';
-
-
 
 function Dashboard() {
   const [showPopup, setShowPopup] = useState(false);
