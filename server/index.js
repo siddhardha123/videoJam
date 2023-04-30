@@ -6,7 +6,7 @@ import educatorRoutes from './routes/educatorRoutes.js'
 import meetingRoutes from './routes/meetingRoutes.js'
 import dotenv from 'dotenv'
 dotenv.config()
-const PORT = 3001;
+const PORT = process.env.PORT;
 const app = express();
 
 const connect = async () => {
