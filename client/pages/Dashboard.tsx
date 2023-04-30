@@ -5,7 +5,7 @@ import addMeet from '../apis/AddMeet'
 import { useAccount } from 'wagmi';
 import LighthouseUpload from '@/apis/LighthouseUpload';
 import addMaterials from '@/apis/AddMaterial';
-
+import dynamic from "next/dynamic";
 function Dashboard() {
   const [showPopup, setShowPopup] = useState(false);
   const [cid, setCid] = useState(null)
@@ -20,8 +20,8 @@ function Dashboard() {
       setCid(data.data.Hash)
 
       const form = {
-        "link" : `https://gateway.lighthouse.storage/ipfs/${cid}`,
-        "name" :  materialName,
+        "link" : `https://gateway.lighthouse.storage/ipfs/${data.data.Hash}`,
+        "name" :  data.data.Name ,
         "wallet" : address
       }
    console.log(form)
@@ -89,7 +89,7 @@ async function handleUploadRecConfirmClick() {
         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 ml-2"
         onClick={handleUploadRecClick}
       >
-        Upload Recording
+        Upload Materials
       </button>
 
       <div className="mt-8">
@@ -132,5 +132,5 @@ async function handleUploadRecConfirmClick() {
 
      </div>)
 }
-export default Dashboard;
            
+export default dynamic(() => Promise.resolve(Dashboard), { ssr: false });

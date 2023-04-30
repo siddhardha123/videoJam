@@ -12,7 +12,7 @@ const EducatorCard = ({props} : any) => {
       />
       <h3 className="text-center text-xl font-bold mb-2">{props.name}</h3>
       <p className="text-center mb-4">About me : {props.about}</p>
-      <h4 className="text-center text-lg font-bold mb-4">${props.price}/month</h4>
+      <h4 className="text-center text-lg font-bold mb-4">${props.price}</h4>
       <button className="block mx-auto py-2 px-4 rounded-lg bg-white text-black font-bold">
         Buy NFT
       </button>

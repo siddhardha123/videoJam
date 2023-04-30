@@ -94,12 +94,12 @@ const Room = () => {
     <>
       {isConnected && !block ? (
         <>
-          <div className="z-10    font-mono text-sm lg:flex">
+          {/* <div className="z-10    font-mono text-sm lg:flex">
             <div className="absolute bg-red-400 top-0 left-1/2 -translate-x-1/2">
               {JSON.stringify(state.value)}
               <div className="text-green-300">{(recordingData as any)?.s3Url}</div>
             </div>
-          </div>
+          </div> */}
 
           {/* Me Video */}
 
