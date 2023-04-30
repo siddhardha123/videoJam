@@ -97,6 +97,7 @@ const Room = () => {
           <div className="z-10    font-mono text-sm lg:flex">
             <div className="absolute bg-red-400 top-0 left-1/2 -translate-x-1/2">
               {JSON.stringify(state.value)}
+              <div className="text-green-300">{(recordingData as any)?.s3Url}</div>
             </div>
           </div>
 
@@ -207,6 +208,15 @@ const Room = () => {
 
           {/* peers */}
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
+          <div className="h-80 aspect-video  bg-zinc-800/50 rounded-2xl relative overflow-hidden">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  className="object-contain absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                />
+          
+             </div>
             {Object.values(peers)
               .filter((peer) => peer.cam)
               .map((peer) => (

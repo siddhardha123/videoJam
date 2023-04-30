@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default async (
+const lighthouseUpload = async (
   e: any,
   accessToken: string,
   uploadProgressCallback = (data: any) => {}
@@ -30,7 +30,7 @@ export default async (
         'Mime-Type': mimeType,
         Authorization: token,
       },
-      onUploadProgress: function (progressEvent) {
+      onUploadProgress: function (progressEvent : any) {
         const _progress = Math.round(progressEvent.loaded / progressEvent.total)
         uploadProgressCallback({
           progress: _progress,
@@ -59,3 +59,6 @@ export default async (
     throw new Error(error?.message)
   }
 }
+
+
+export default lighthouseUpload;

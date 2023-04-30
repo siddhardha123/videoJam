@@ -1,4 +1,5 @@
 import axios from "axios";
+import baseUrl from '../baseUrl.json'
 type educator = {
     name : string,
     photo : string,
@@ -8,7 +9,7 @@ type educator = {
 }
 const addEducators = async (form : educator) => {
      
-    const response = await axios.post("http://localhost:3001/api/educators/addEducators",{
+    const response = await axios.post(`${baseUrl.url}/api/educators/addEducators`,{
         ...form
     })
     return response.data

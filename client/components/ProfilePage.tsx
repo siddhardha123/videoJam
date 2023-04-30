@@ -41,7 +41,7 @@ const  ProfilePage = ({ data,meetings,materials }: any)=> {
         setDisable(false)
       }
      })
- },[])
+ },[address])
 
   return (
     <div className="mt-12 bg-black flex flex-col justify-center ">

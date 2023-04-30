@@ -11,6 +11,7 @@ const NavBar:NextComponentType = () => {
   // Replace javascript:void(0) path with your path
   const navigation = [
       { title: "Dashboard", path: "/Dashboard" },
+      { title: "Educators", path: "/Educators" },
       
   ]
   return (
@@ -44,7 +45,7 @@ const NavBar:NextComponentType = () => {
                       {
                           navigation.map((item, idx) => {
                               return (
-                                <li key={idx} className="text-gray-600 hover:text-indigo-600">
+                                <li key={idx} className="text-gray-600 hover:text-indigo-600 hover:bg-white rounded-lg px-2 py-1">
                                     <a href={item.path}>
                                         { item.title }
                                     </a>

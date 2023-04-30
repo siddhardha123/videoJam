@@ -1,7 +1,8 @@
 import Link from "next/link";
+import baseUrl from '../../baseUrl.json'
 import EducatorCard from "@/components/EducatorCard";
 export const getStaticProps = async () => {
-  const res = await fetch("http://localhost:3001/api/educators/getEducators");
+  const res = await fetch(`${baseUrl.url}/api/educators/getEducators`);
   const data = await res.json();
 
   return {
@@ -19,10 +20,10 @@ const educators = ({ data } : any) => {
             <div className="max-w-screen-xl mx-auto px-4 text-center md:px-8 text-white">
                 <div className="max-w-xl mx-auto">
                     <h3 className=" text-3xl font-semibold sm:text-4xl">
-                        Meet our team
+                        Meet our Educators
                     </h3>
                     <p className=" mt-3">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industrys standard dummy.
+                    Meet the Amazing Educators Who Will Guide Your Path to Learning
                     </p> 
                 </div>
                 <div className="mt-12">
